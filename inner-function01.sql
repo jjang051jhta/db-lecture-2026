@@ -48,5 +48,55 @@ SELECT ename, concat(concat(substr(ename,1,1) ,'***'),substr(ename,-1)) AS marki
 FROM emp;
 
 
+SELECT substr('012203-1234567',1,6) FROM dual;
+SELECT substr('012203-1234567',8,1) FROM dual;
+SELECT substr('01025822242',-4) FROM dual;
+
+SELECT instr('HELLO ORACLE!','L') ,
+       instr('HELLO ORACLE!','L',5),
+       instr('HELLO ORACLE!','L',4,2),
+       instr('HELLO ORACLE!','L',-1),
+       instr('HELLO ORACLE!','L')
+FROM  dual;
+-- 이름중에 S가 포함되어 있는 emp
+SELECT * FROM emp WHERE ename LIKE '%S%';
+SELECT * FROM emp WHERE instr(ename,'S') > 0;
+
+--공백제거
+SELECT trim('  HELLO  ') ,
+       ltrim('  HELLO  ') ,
+       rtrim('  HELLO  ')
+FROM dual;
+
+--대치 replace
+SELECT REPLACE(' H  E LL O',' ','') FROM dual;
+SELECT REPLACE('010-1234-5678','-','') FROM dual;
+SELECT 'A1B2C3' FROM dual;
+SELECT REGEXP_REPLACE('A1B2C3','[^A-Za-z]','') FROM dual;
+
+--채우기
+SELECT lpad('77',3,'0') FROM dual;
+SELECT rpad('A',5,'*') FROM dual;
+
+
+SELECT ename,
+	   substr(ename,1,1)|| rpad('*',LENGTH(ename)-2,'*')||substr(ename,-1)
+FROM emp;
+SELECT
+	'장성호',
+	substr('장성호', 1, 1)|| rpad('*', LENGTH('장성호')-2, '*')|| substr('장성호',-1)
+FROM
+	dual; 
+ 
+
+
+
+
+
+
+
+
+
+
 
 
