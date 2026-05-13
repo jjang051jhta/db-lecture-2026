@@ -199,7 +199,29 @@ SELECT * FROM EMP WHERE (sal>2000 AND sal<4000) OR job = 'PRESIDENT';
 SELECT * FROM EMP WHERE ename LIKE '_____' ;
 
 
+--집합연산자  합집합/교집합/차집합
+--1. union은 중복제거
+SELECT job FROM emp
+UNION  
+SELECT job FROM emp;
 
+--2. union all 은 중복제거 안함
+SELECT job FROM emp
+UNION ALL 
+SELECT job FROM emp;
+
+--3. intersect
+SELECT deptno FROM emp
+INTERSECT 
+SELECT deptno FROM DEPT;
+--4. minus
+SELECT deptno FROM DEPT
+minus
+SELECT deptno FROM emp;
+
+SELECT ename,empno FROM emp
+minus
+SELECT deptno,dname FROM DEPT dept;
 
 
 
