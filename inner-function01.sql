@@ -91,8 +91,103 @@ FROM
 
 
 
+--1 .사원 이름을 대문자로 출력하시오.
+SELECT upper(ename) FROM emp;
+
+--2 .사원 이름을 소문자로 출력하시오.
+SELECT lower(ename) FROM emp;
+
+--3. 사원 이름의 첫 글자만 대문자로 출력하시오.
+SELECT initcap(ename) FROM emp;
+
+--4. 사원 이름의 글자 수를 출력하시오.
+SELECT length(ename) FROM emp;
+
+--5. 사원 이름의 앞 3글자만 출력하시오.
+SELECT substr(ename,1,3) FROM emp;
+
+--6. 사원 이름의 마지막 2글자만 출력하시오.
+SELECT substr(ename,-2) FROM emp;
+
+--7. 사원 이름의 두 번째 글자부터 끝까지 출력하시오.
+SELECT substr(ename,2) FROM emp;
+
+--8. 사원 이름에 A가 포함된 사원만 출력하시오.
+SELECT ename FROM emp WHERE ename LIKE '%A%';
+
+--9. 사원 이름에서 A를 *로 바꿔 출력하시오.
+SELECT ename FROM emp WHERE ename LIKE '%A%';
+
+--10. 사원 이름 앞에 EMP_를 붙여 출력하시오.
+SELECT 'EMP_' || ename FROM emp;
+SELECT CONCAT('EMP_', ename) FROM emp;
 
 
+--11. 11. 사원 이름 뒤에 _USER를 붙여 출력하시오.
+SELECT ename || '_USER' FROM emp;
+SELECT CONCAT( ename,'_USER') FROM emp;
+
+--12. 사원 이름의 앞뒤에 [ ]를 붙여 출력하시오.
+SELECT '['||ename || ']' FROM emp;
+SELECT CONCAT(CONCAT('[', ename),']') FROM emp;
+
+--13. 사원 이름을 전체 길이 10자리로 만들고, 왼쪽 빈 공간을 *로 채우시오.
+SELECT LPAD(ename,10,'*') FROM emp;
+
+--14. 사원 이름을 전체 길이 10자리로 만들고, 오른쪽 빈 공간을 *로 채우시오.
+SELECT RPAD(ename,10,'*') FROM emp;
+
+--15. 사원 이름의 첫 글자만 출력하시오.
+SELECT SUBSTR(ename,1,1) FROM emp;
+
+--16. 사원 이름의 마지막 글자만 출력하시오.
+SELECT SUBSTR(ename,-1) FROM emp;
+
+--17. 사원 이름의 첫 글자와 마지막 글자만 이어서 출력하시오.
+SELECT SUBSTR(ename,1,1)||SUBSTR(ename,-1) FROM emp;
+SELECT CONCAT(SUBSTR(ename,1,1),SUBSTR(ename,-1)) FROM emp;
+
+--18. 사원 이름의 첫 글자만 남기고 나머지는 ***로 출력하시오.
+SELECT CONCAT(SUBSTR(ename,1,1),'***') FROM emp;
+
+--19. 사원 이름의 마지막 글자만 남기고 앞에는 ***를 붙여 출력하시오.
+SELECT CONCAT('***',SUBSTR(ename,-1)) FROM emp;
+
+--20. 사원 이름이 5글자 이상인 사원만 출력하시오.
+SELECT ename FROM emp WHERE LENGTH(ename)>=5;
+
+--21. 사원 이름이 4글자인 사원만 출력하시오.
+SELECT ename FROM emp WHERE LENGTH(ename) = 4;
+SELECT ename FROM emp WHERE ename LIKE '____';
+
+
+--22. 사원 이름에서 L의 위치를 출력하시오.
+SELECT instr(ename,'L') FROM emp;
+
+--23. 사원 이름에 T가 포함된 사원만 출력하시오.
+SELECT ename FROM emp WHERE ename LIKE '%T%';
+
+--24. 사원 이름에서 S를 $로 바꿔 출력하시오.
+SELECT REPLACE(ename,'S','$') FROM emp;
+
+--25. 사원 이름의 앞 2글자만 출력하시오.
+SELECT SUBSTR(ename,1,2) FROM emp;
+
+
+--26. 사원 이름의 뒤 3글자만 출력하시오.
+SELECT SUBSTR(ename,-3) FROM emp;
+
+--27. 사원 이름의 앞 2글자와 뒤 2글자를 이어서 출력하시오.
+SELECT CONCAT( SUBSTR(ename,1,2),SUBSTR(ename,-2)) FROM emp;
+
+--28. 사원 이름을 소문자로 바꾼 뒤 _emp를 붙여 출력하시오.
+SELECT CONCAT( lower(ename),'_emp') FROM emp;
+
+--29. 사원 이름의 앞 2글자만 남기고 뒤에는 ***를 붙여 출력하시오.
+SELECT CONCAT( SUBSTR(ename,1,2),'***') FROM emp;
+
+--30. 사원 이름의 앞 1글자와 뒤 1글자 사이에 ***를 넣어 출력하시오.
+SELECT CONCAT(CONCAT( SUBSTR(ename,1,1),'***'),SUBSTR(ename,-1)) FROM emp;
 
 
 
