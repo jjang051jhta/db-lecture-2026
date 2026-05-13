@@ -36,6 +36,22 @@ SELECT * FROM emp
 WHERE job IN ('MANAGER','SALESMAN','CLERK')
 ORDER BY job;
 
+SELECT * FROM emp
+WHERE deptno = 20 OR deptno = 30
+ORDER BY deptno;
+
+SELECT * FROM emp
+WHERE deptno IN (20,30)
+ORDER BY deptno;
+
+SELECT * FROM emp
+WHERE (deptno,job) IN ((20,'MANAGER'),(30,'CLERK'));
+
+SELECT * FROM EMP 
+WHERE 
+(DEPTNO =20 AND job = 'MANAGER') OR 
+(DEPTNO =30 AND job = 'CLERK');
+
 
 
 
