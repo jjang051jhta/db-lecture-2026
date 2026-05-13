@@ -32,3 +32,21 @@ ORDER BY nameLength;
 --6. order by
 --별칭은 where에 쓸 수 없다.
 
+SELECT ename, substr(ename,1,3), substr(ename,2), substr(ename,-3,2)
+FROM emp;
+SELECT ename || '**'
+FROM emp;
+--S***H
+SELECT ename, substr(ename,1,1) || '***' || substr(ename,-1) AS markingName 
+FROM emp;
+
+-- ||은 문자열을 연결할때 쓰지만 오라클에서만 사용가능
+-- 표준은 concat('문자열','문자열')을 사용한다.
+SELECT ename,ename||'**' FROM emp;
+
+SELECT ename, concat(concat(substr(ename,1,1) ,'***'),substr(ename,-1)) AS markingName 
+FROM emp;
+
+
+
+
