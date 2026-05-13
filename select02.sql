@@ -219,8 +219,8 @@ SELECT deptno FROM DEPT
 minus
 SELECT deptno FROM emp;
 
-SELECT ename,empno FROM emp
-minus
+SELECT empno,ename FROM emp
+UNION 
 SELECT deptno,dname FROM DEPT dept;
 
 
