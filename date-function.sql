@@ -61,7 +61,27 @@ SELECT NEXT_DAY(LAST_DAY(sysdate),'FRIDAY') FROM dual;
 SELECT NEXT_DAY(LAST_DAY(sysdate)-7,'FRIDAY') FROM dual;
 
 
-
+SELECT 
+	sysdate ,
+	round(sysdate) AS formatTime, --12기준으로 다음날짜
+	round(sysdate,'CC') AS formatCC, --세기 기준으로 다음 세기  2001
+	round(sysdate,'YYYY') AS formatYear, --6월30일 기준 다음 년도  
+	round(sysdate,'MM') AS formatMonth, --15일 기준 다음 달 이번 달  
+	round(sysdate,'Q') AS formatQuater, --분기 기준  
+	round(sysdate,'DDD') AS formatDay, --하루 기준  12시 기준으로 오늘 또는 내일
+	round(sysdate,'HH') AS formatHour --30분기준으로 다음 시간 현재 시간
+FROM dual
+UNION 
+SELECT 
+	sysdate ,
+	trunc(sysdate) AS formatTime, --12기준으로 다음날짜
+	trunc(sysdate,'CC') AS formatCC, --세기 기준으로 다음 세기  2001
+	trunc(sysdate,'YYYY') AS formatYear, --6월30일 기준 다음 년도  
+	trunc(sysdate,'MM') AS formatMonth, --15일 기준 다음 달 이번 달  
+	trunc(sysdate,'Q') AS formatQuater, --분기 기준  
+	trunc(sysdate,'DDD') AS formatDay, --하루 기준  12시 기준으로 오늘 또는 내일
+	trunc(sysdate,'HH') AS formatHour --30분기준으로 다음 시간 현재 시간
+FROM dual;
 
 
 
