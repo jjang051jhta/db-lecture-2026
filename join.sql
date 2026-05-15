@@ -33,8 +33,30 @@ FROM emp e,salgrade s
 WHERE e.SAL BETWEEN s.LOSAL AND s.HISAL ;
 
 
+--ansi join
+SELECT * FROM emp e, dept d;
 
+SELECT e.*,d.DNAME, d.LOC  
+FROM emp e
+JOIN dept d
+ON e.DEPTNO = d.DEPTNO;
 
+SELECT e.*,d.DNAME, d.LOC  
+FROM emp e
+CROSS JOIN dept d;
 
+SELECT e.*,d.DNAME, d.LOC  
+FROM emp e
+JOIN dept d
+ON 1 = 1;
+
+SELECT *
+FROM emp e,salgrade s
+WHERE e.SAL BETWEEN s.LOSAL AND s.HISAL ;
+
+SELECT * 
+FROM emp e
+JOIN salgrade s
+ON e.sal BETWEEN s.losal AND s.HISAL;
 
 
