@@ -82,12 +82,58 @@ INSERT INTO dept_copy(deptno,dname,loc)
 	SELECT DISTINCT deptno+5, 'COPY_DEPT','UNKNOWN' FROM dept_copy;
 
 --10. salgrade_copy에 새로운 급여 등급을 추가하시오.
+--GRADE : 6
+--LOSAL : 5001
+--HISAL : 9999
+INSERT INTO salgrade_copy(grade,losal,hisal)  VALUES (6,5001,9999);
 
-SELECT * FROM emp_copy;
+--11. emp_copy에서 10번 부서 사원의 급여를 10% 인상하시오.
+UPDATE emp_copy SET sal = sal*1.1 WHERE deptno = 10;
+
+--12. emp_copy에서 직무가 SALESMAN인 사원의 커미션을 100 증가시키시오.
+UPDATE emp_copy 
+	SET comm = nvl(comm,0) + 100 WHERE job = 'SALESMAN';
+
+--13. emp_copy에서 커미션이 NULL인 사원의 커미션을 0으로 변경하시오.
+UPDATE emp_copy 
+	SET comm = 0 WHERE comm IS NULL;
+
+--14. dept_copy에서 50번 부서의 위치를 INCHEON으로 변경하시오.
+UPDATE dept_copy SET loc = 'INCHEON' WHERE deptno = 50;
+
+--15. emp_copy에서 SMITH의 급여를 전체 평균 급여로 변경하시오.
+UPDATE emp_copy 
+	SET sal = (SELECT avg(sal) FROM emp_copy) 
+WHERE ename = 'SMITH';
+
+--16. emp_copy에서 20번 부서 사원의 급여를 30번 부서 평균 급여만큼 증가시키시오.
+UPDATE emp_copy 
+	SET sal = (SELECT avg(sal) FROM emp_copy WHERE deptno = 30) 
+WHERE deptno = 20;
+
+--17. emp_copy에서 부서명이 SALES인 사원의 급여를 5% 인상하시오.
+UPDATE emp_copy 
+	SET sal = sal*1.05 
+WHERE deptno = (SELECT deptno FROM dept_copy WHERE dname = 'SALES');
+
+--18. emp_copy에서 최고 급여자의 직무를 TOP으로 변경하시오.
+UPDATE emp_copy SET job = 'TOP' 
+WHERE sal = (SELECT max(sal) FROM emp_copy);
+
+--19. dept_copy에서 사원이 없는 부서의 지역을 EMPTY로 변경하시오.
+
+SELECT * FROM salgrade_copy;
+
+COMMIT;
+
+select * FROM emp_copy;
+
+SELECT * FROM emp_copy WHERE job = 'SALESMAN';
 
 SELECT * FROM dept_copy;
 
 DELETE FROM emp_copy WHERE empno = 9002;
 
 
+ROLLBACK;
 COMMIT;
