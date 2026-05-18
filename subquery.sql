@@ -159,3 +159,60 @@ JOIN dept d
 ON e.DEPTNO = d.DEPTNO
 WHERE e.sal >= (SELECT max(sal) FROM emp);
 
+
+--21. 부서별 평균 급여보다 많이 받는 사원을 조회하시오.
+SELECT ename,sal,deptno
+FROM emp e 
+WHERE sal >= (SELECT avg(sal) FROM emp WHERE deptno = e.deptno);
+
+--22. 가장 최근에 입사한 사원을 조회하시오.
+SELECT ename,hiredate 
+FROM emp
+WHERE HIREDATE = (SELECT max(hiredate) FROM emp);
+
+--23. 가장 오래전에 입사한 사원을 조회하시오.
+SELECT ename,hiredate 
+FROM emp
+WHERE HIREDATE = (SELECT min(hiredate) FROM emp);
+
+--24. 10번 부서 사원들의 평균 급여보다 많이 받는 사원을 조회하시오.
+SELECT ename,sal FROM emp 
+WHERE sal > (SELECT avg(sal) FROM emp WHERE deptno = 10);
+
+--25. 직무별 최고 급여자를 조회하시오.
+SELECT ename,job,sal FROM emp
+WHERE (job,sal) IN (SELECT job,max(sal) FROM emp
+GROUP BY job);
+
+--26. 직무별 최저 급여자를 조회하시오.
+SELECT ename,job,sal FROM emp
+WHERE (job,sal) IN (SELECT job,min(sal) FROM emp
+GROUP BY job);
+
+--27. 모든 부서의 최고 급여보다 많이 받는 사원을 조회하시오.
+SELECT ename,sal FROM emp
+WHERE sal >= ALL (SELECT max(sal) FROM emp 
+GROUP BY deptno);
+
+--28. 어떤 부서의 최고 급여보다 많이 받는 사원을 조회하시오.
+SELECT ename,sal FROM emp
+WHERE sal >= ANY (SELECT max(sal) FROM emp 
+GROUP BY deptno);
+
+--29. 부서별 최고 급여자와 최저 급여자를 함께 조회하시오.
+SELECT ename,sal,deptno
+FROM emp 
+WHERE (deptno,sal) IN (
+SELECT deptno,max(sal) FROM emp 
+GROUP BY deptno) 
+OR (deptno,sal) IN (
+SELECT deptno,min(sal) FROM emp 
+GROUP BY deptno)
+order BY deptno;
+
+
+--30. 평균 급여가 전체 평균 급여보다 높은 부서를 조회하시오.
+SELECT deptno,avg(sal) AS avgSal
+FROM emp
+GROUP BY deptno
+HAVING avg(sal) > (SELECT avg(sal) FROM emp);
