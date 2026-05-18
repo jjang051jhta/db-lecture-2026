@@ -103,3 +103,59 @@ GROUP BY deptno);
 SELECT ename,deptno 
 FROM emp
 WHERE deptno = (SELECT deptno FROM emp WHERE ename = 'KING');
+
+--11. ALLEN과 같은 직무(job)를 가진 사원을 조회하시오.
+SELECT ename,job 
+FROM emp 
+WHERE job = (SELECT job FROM emp WHERE ename = 'ALLEN');
+
+--12. 평균 급여보다 많이 받는 사원 중 30번 부서 사원을 조회하시오.
+SELECT ename,sal,deptno 
+FROM emp
+WHERE sal >= (SELECT avg(sal) FROM emp) AND deptno = 30;
+
+--13. 부서명이 SALES인 부서의 사원을 조회하시오.
+SELECT ename,deptno 
+FROM emp
+WHERE deptno = (SELECT deptno FROM dept WHERE dname = 'SALES');
+
+--14. 사원이 존재(1명이라도 있는)하는 부서만 조회하시오.
+SELECT dname FROM dept d
+WHERE EXISTS (SELECT * FROM EMP e WHERE e.DEPTNO = d.DEPTNO);
+
+--15. 사원이 존재하지 않는 부서를 조회하시오.
+SELECT dname FROM dept d
+WHERE NOT EXISTS (SELECT * FROM EMP e WHERE e.DEPTNO = d.DEPTNO);
+
+--16. 자신의 부서 평균 급여보다 많이 받는 사원을 조회하시오.
+SELECT ename,sal,deptno
+FROM emp e
+WHERE sal > (SELECT avg(sal) FROM emp WHERE deptno = e.DEPTNO);
+
+--17. 자신의 부서 평균 급여보다 적게 받는 사원을 조회하시오.
+SELECT ename,sal,deptno
+FROM emp e
+WHERE sal < (SELECT avg(sal) FROM emp WHERE deptno = e.DEPTNO);
+
+--18. 각 부서의 평균 급여를 조회하시오.
+SELECT deptno,avg(sal) AS avgSal FROM emp
+GROUP BY deptno;
+
+SELECT deptno,avgsal 
+FROM (SELECT deptno,avg(sal) AS avgSal FROM emp
+GROUP BY deptno); 
+--FROM 절에 쓰는 subquery를 보통 inline-view라고 한다.
+
+--19. 평균 급여가 가장 높은 부서를 조회하시오.
+SELECT deptno FROM emp
+GROUP BY deptno 
+HAVING avg(sal) = (SELECT max(avg(sal)) FROM emp
+GROUP BY deptno);
+
+--20. 최고 급여를 받는 사원의 이름과 부서명을 조회하시오.
+SELECT e.ename,d.dname
+FROM emp e
+JOIN dept d
+ON e.DEPTNO = d.DEPTNO
+WHERE e.sal >= (SELECT max(sal) FROM emp);
+
