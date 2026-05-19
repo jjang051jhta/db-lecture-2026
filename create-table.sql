@@ -121,19 +121,71 @@ UPDATE emp_copy SET job = 'TOP'
 WHERE sal = (SELECT max(sal) FROM emp_copy);
 
 --19. dept_copy에서 사원이 없는 부서의 지역을 EMPTY로 변경하시오.
+UPDATE DEPT_COPY d SET loc = 'EMPTY'
+WHERE NOT EXISTS (
+	SELECT * FROM EMP_COPY e WHERE e.DEPTNO = d.DEPTNO 
+);
 
+--20. emp_copy에서 자신의 부서 평균 급여보다 적게 받는 사원의 급여를 300 증가시키시오.
+UPDATE EMP_COPY e SET sal = sal+300
+WHERE sal < (SELECT avg(sal) FROM emp_copy WHERE DEPTNO = e.DEPTNO);
+
+--21.  emp_copy에서 급여가 1000 미만인 사원을 삭제하시오.
+DELETE FROM emp_copy
+WHERE sal < 2000;
+
+--22. emp_copy에서 커미션이 0인 사원을 삭제하시오.
+DELETE FROM emp_copy
+WHERE comm = 0;
+
+--23. dept_copy에서 60번 부서를 삭제하시오.
+DELETE FROM DEPT_COPY 
+WHERE deptno = 60;
+
+--24. emp_copy에서 부서번호가 40번인 사원을 삭제하시오.
+DELETE FROM emp_copy 
+WHERE deptno = 40;
+
+--25. emp_copy에서 평균 급여보다 적게 받는 사원을 삭제하시오.
+DELETE FROM emp_copy
+WHERE sal < (SELECT avg(sal) FROM emp_copy);
+
+--26. emp_copy에서 부서명이 RESEARCH인 부서의 사원을 삭제하시오.
+DELETE FROM emp_copy 
+WHERE deptno = (SELECT deptno FROM DEPT_COPY WHERE dname = 'RESEARCH');
+
+--27. dept_copy에서 사원이 존재하지 않는 부서를 삭제하시오.
+DELETE FROM dept_copy d
+WHERE NOT EXISTS (SELECT * FROM emp_copy e WHERE e.deptno = d.deptno);
+
+--28. emp_copy에서 각 부서의 최저 급여자를 삭제하시오.
+DELETE FROM emp_copy 
+WHERE (deptno,sal) IN 
+	(SELECT deptno,min(sal) FROM emp_copy group BY deptno);
+
+--29. emp_copy에서 관리자 역할을 하고 있는 사원은 제외하고 나머지 MANAGER 직무 사원을 삭제하시오.
+DELETE FROM emp_copy e
+WHERE e.job =  'MANAGER' AND NOT EXISTS 
+	(SELECT * FROM emp_copy m WHERE m.mgr = e.empno);
+
+--30. emp_copy에서 가장 오래전에 입사한 사원을 삭제하시오.
+DELETE FROM emp_copy WHERE hiredate = 
+(SELECT min(hiredate) FROM EMP_COPY ec);
+
+
+CREATE TABLE EMP_COPY  AS SELECT * FROM emp;
+CREATE TABLE dept_COPY  AS SELECT * FROM dept;
+
+INSERT INTO emp_copy VALUES (9999,'JJANG','CEO',NULL,sysdate,9999,300,50);
+INSERT INTO dept_copy values(50,'RESEARCH','ILSAN');
+
+DROP TABLE dept_copy;
+
+DELETE FROM DEPT_COPY WHERE deptno = 50;
+
+SELECT * FROM EMP_COPY ec;
 SELECT * FROM salgrade_copy;
-
+SELECT * FROM dept_COPY dc;
 COMMIT;
-
-select * FROM emp_copy;
-
-SELECT * FROM emp_copy WHERE job = 'SALESMAN';
-
-SELECT * FROM dept_copy;
-
-DELETE FROM emp_copy WHERE empno = 9002;
-
-
 ROLLBACK;
-COMMIT;
+
